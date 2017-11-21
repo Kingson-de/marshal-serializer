@@ -14,10 +14,10 @@ class Collection extends DataStructure {
         $response = [];
 
         $data            = $this->getData();
-        $modelCollection = reset($data);
+        $modelCollection = array_shift($data);
 
         foreach ($modelCollection as $model) {
-            $item = call_user_func([$mapper, 'map'], $model);
+            $item = call_user_func([$mapper, 'map'], $model, ...$data);
 
             if (!is_array($item)) {
                 continue;

@@ -15,11 +15,11 @@ abstract class Mapper {
 //     */
 //    abstract public function map();
 
-    protected function object(Mapper $mapper, ...$data) {
+    protected function object(Mapper $mapper, ...$data): Object {
         return new Object($mapper, ...$data);
     }
 
-    protected function collection(Mapper $mapper, $data) {
-        return new Collection($mapper, $data);
+    protected function collection(Mapper $mapper, ...$data): Collection {
+        return new Collection($mapper, ...$data);
     }
 }
