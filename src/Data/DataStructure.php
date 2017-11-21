@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace KingsonDe\ResponseMapper\Data;
+namespace KingsonDe\Marshal\Data;
 
-use KingsonDe\ResponseMapper\Mapper;
+use KingsonDe\Marshal\Mapper;
 
 abstract class DataStructure {
 
@@ -27,11 +27,11 @@ abstract class DataStructure {
         $this->data   = $data;
     }
 
-    protected function getMapper() {
+    protected function getMapper(): Mapper {
         return $this->mapper;
     }
 
-    protected function getData() {
+    protected function getData(): array {
         return $this->data;
     }
 

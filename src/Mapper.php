@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-namespace KingsonDe\ResponseMapper;
+namespace KingsonDe\Marshal;
 
-use KingsonDe\ResponseMapper\Data\Collection;
-use KingsonDe\ResponseMapper\Data\Object;
+use KingsonDe\Marshal\Data\Collection;
+use KingsonDe\Marshal\Data\Object;
 
+/**
+ * Concrete Mapper classes MUST implement a "map" function that must return an array or null.
+ * The reason of not having an abstract function for the "map" function is type hinting.
+ */
 abstract class Mapper {
-
-//    /**
-//     * @param mixed
-//     * @return array|null
-//     */
-//    abstract public function map();
 
     protected function object(Mapper $mapper, ...$data): Object {
         return new Object($mapper, ...$data);

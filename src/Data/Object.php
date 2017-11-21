@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace KingsonDe\ResponseMapper\Data;
+namespace KingsonDe\Marshal\Data;
 
 class Object extends DataStructure {
 
@@ -10,7 +10,6 @@ class Object extends DataStructure {
      * @return array|null
      */
     public function build() {
-        $mapper   = $this->getMapper();
-        return call_user_func_array([$mapper, 'map'], $this->getData());
+        return $this->getMapper()->map(...$this->getData());
     }
 }

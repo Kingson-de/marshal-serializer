@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace KingsonDe\ResponseMapper\Example\Mapper;
+namespace KingsonDe\Marshal\Example\Mapper;
 
-use KingsonDe\ResponseMapper\Example\Model\Profile;
-use KingsonDe\ResponseMapper\Mapper;
+use KingsonDe\Marshal\Example\Model\Profile;
+use KingsonDe\Marshal\Mapper;
 
 class ProfileMapper extends Mapper {
 

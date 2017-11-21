@@ -2,30 +2,31 @@
 
 declare(strict_types=1);
 
-namespace KingsonDe\ResponseMapper\Data;
+namespace KingsonDe\Marshal\Data;
 
 class Collection extends DataStructure {
 
     /**
      * @return array
      */
-    public function build() {
-        $mapper   = $this->getMapper();
-        $response = [];
+    public function build(): array {
+        $mapper = $this->getMapper();
+        $output = [];
 
-        $data            = $this->getData();
+        $data = $this->getData();
+        /** @var \Traversable $modelCollection */
         $modelCollection = array_shift($data);
 
         foreach ($modelCollection as $model) {
-            $item = call_user_func([$mapper, 'map'], $model, ...$data);
+            $item = $mapper->map($model, ...$data);
 
-            if (!is_array($item)) {
+            if (!\is_array($item)) {
                 continue;
             }
 
-            $response[] = $item;
+            $output[] = $item;
         }
 
-        return $response;
+        return $output;
     }
 }

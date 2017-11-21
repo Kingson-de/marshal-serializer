@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace KingsonDe\ResponseMapper;
+namespace KingsonDe\Marshal;
 
-use KingsonDe\ResponseMapper\Data\DataStructure;
+use KingsonDe\Marshal\Data\DataStructure;
 
-class Renderer {
+class Marshal {
 
     /**
      * @param DataStructure $dataStructure
      * @return array|null
      */
-    public static function createData(DataStructure $dataStructure) {
+    public static function serialize(DataStructure $dataStructure) {
         $rawResponse = $dataStructure->build();
 
         return static::process($rawResponse);
@@ -23,7 +23,7 @@ class Renderer {
      * @return array|null
      */
     private static function process($rawResponse) {
-        if (!is_array($rawResponse)) {
+        if (!\is_array($rawResponse)) {
             return null;
         }
 
@@ -31,11 +31,11 @@ class Renderer {
 
         foreach ($rawResponse as $property => $value) {
             if ($value instanceof DataStructure) {
-                $response[$property] = static::createData($value);
+                $response[$property] = static::serialize($value);
                 continue;
             }
 
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $response[$property] = static::process($value);
                 continue;
             }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace KingsonDe\ResponseMapper\Example\Model;
+namespace KingsonDe\Marshal\Example\Model;
 
 class User {
 
