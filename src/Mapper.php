@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace KingsonDe\Marshal;
 
 use KingsonDe\Marshal\Data\Collection;
-use KingsonDe\Marshal\Data\Object;
+use KingsonDe\Marshal\Data\Item;
 
 /**
  * Concrete Mapper classes MUST implement a "map" function that must return an array or null.
@@ -13,8 +13,8 @@ use KingsonDe\Marshal\Data\Object;
  */
 abstract class Mapper {
 
-    protected function object(Mapper $mapper, ...$data): Object {
-        return new Object($mapper, ...$data);
+    protected function item(Mapper $mapper, ...$data): Item {
+        return new Item($mapper, ...$data);
     }
 
     protected function collection(Mapper $mapper, ...$data): Collection {

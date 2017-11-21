@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace KingsonDe\Marshal\Data;
 
-class Object extends DataStructure {
+class Item extends DataStructure {
 
     /**
      * @return array|null

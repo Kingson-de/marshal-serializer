@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace KingsonDe\Marshal;
 
 use KingsonDe\Marshal\Data\Collection;
-use KingsonDe\Marshal\Data\Object;
+use KingsonDe\Marshal\Data\Item;
 use KingsonDe\Marshal\Example\Mapper\FollowerMapper;
 use KingsonDe\Marshal\Example\Mapper\ProfileMapper;
 use KingsonDe\Marshal\Example\Model\Profile;
@@ -17,12 +17,12 @@ class MarshalTest extends TestCase {
     public function testSerializeComplexObject() {
         $profile = $this->createProfile();
 
-        $object = new Object(
+        $item = new Item(
             new ProfileMapper(),
             $profile
         );
 
-        $data = Marshal::serialize($object);
+        $data = Marshal::serialize($item);
 
         $this->assertSame(123, $data['id']);
         $this->assertSame('kingson@example.org', $data['email']);

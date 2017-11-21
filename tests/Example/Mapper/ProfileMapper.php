@@ -17,9 +17,9 @@ class ProfileMapper extends Mapper {
             'id'             => $user->getId(),
             'email'          => $user->getEmail(),
             'username'       => $user->getUsername(),
-            'follower_count' => count($followers),
+            'follower_count' => \count($followers),
             'followers'      => $this->collection(new FollowerMapper(), $followers),
-            'null'           => $this->object(new NullMapper()),
+            'null'           => $this->item(new NullMapper()),
         ];
     }
 }
