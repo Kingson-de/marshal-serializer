@@ -1,6 +1,6 @@
 # Marshal
 
-[![License](https://img.shields.io/badge/license-apache%202.0-lightgrey.svg)](https://github.com/Kingson-de/marshal-serializer/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/Kingson-de/marshal-serializer/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/Kingson-de/marshal-serializer.svg?branch=master)](https://travis-ci.org/Kingson-de/marshal-serializer)
 
 ## Introduction
