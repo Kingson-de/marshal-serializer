@@ -27,6 +27,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "test-dbg": "phpdbg -qrr vendor/phpunit/phpunit/phpunit"
+        "test-dbg": "phpdbg -qrr vendor/phpunit/phpunit/phpunit",
+        "quicktest": "phpunit --no-coverage"
     }
 }
