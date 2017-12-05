@@ -48,9 +48,9 @@ It is always possible to use a callable in a mapper or vice versa.
 
 ```php
 
-use KingsonDe\Marshal\Mapper;
+use KingsonDe\Marshal\AbstractMapper;
 
-class UserMapper extends Mapper {
+class UserMapper extends AbstractMapper {
 
     public function map(User $user) {
         return [
@@ -135,13 +135,13 @@ class UserController extends Controller {
 
 Mappers can even include other mappers with different data structures.
 
-Therefore you can use `item` or `collection` function from the abstract Mapper class.
+Therefore you can use `item`, `itemCallable`, `collection` or `collectionCallable` function from the AbstractMapper class.
 
 ```php
 
-use KingsonDe\Marshal\Mapper;
+use KingsonDe\Marshal\AbstractMapper;
 
-class UserMapper extends Mapper {
+class UserMapper extends AbstractMapper {
 
     public function map(User $user) {
         return [
@@ -167,9 +167,9 @@ $data = Marshal::serialize($item);
 
 ```php
 
-use KingsonDe\Marshal\Mapper;
+use KingsonDe\Marshal\AbstractMapper;
 
-class UserMapper extends Mapper {
+class UserMapper extends AbstractMapper {
 
     public function map(User $user, FollowerCollection $followers, Location $location) {
         return [
@@ -195,9 +195,9 @@ Collection mappers can discard single item's by returning `null`.
 
 ```php
 
-use KingsonDe\Marshal\Mapper;
+use KingsonDe\Marshal\AbstractMapper;
 
-class UserMapper extends Mapper {
+class UserMapper extends AbstractMapper {
 
     public function map(User $user) {
         if ($user->isPrivate()) {
