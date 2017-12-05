@@ -42,6 +42,10 @@ The first thing to do is to create a mapper that takes care of mapping your enti
 
 You always need to inherit from the abstract Mapper class and implement a `map` function with your type hinting.
 
+There is also the option to use directly a callable to map data. This will be explained later.
+
+It is always possible to use a callable in a mapper or vice versa.
+
 ```php
 
 use KingsonDe\Marshal\Mapper;
@@ -86,6 +90,25 @@ The final step is to map the data structures to the actual format.
 use KingsonDe\Marshal\Marshal;
 
 $data = Marshal::serialize($item);
+```
+
+You are also not forced to create data structures on your own, you can use the appropriate Marshal functions instead:
+
+```php
+use KingsonDe\Marshal\Marshal;
+
+$data = Marshal::serializeItem($mapper, $model);
+// or
+$data = Marshal::serializeCollection($mapper, $modelCollection);
+// or 
+$data = Marshal::serializeCollectionCallable(function (User $user) {
+    return [
+        'username' => $user->getUsername(),
+        'email'    => $user->getEmail(),
+        'birthday' => $user->getBirthday()->format('Y-m-d'),
+        'followers => count($user->getFollowers()),
+    ];
+}, $modelCollection);
 ```
 
 ### Symfony Example
@@ -165,6 +188,28 @@ For collections the first parameter passed is the one which Marshal will use for
 All other parameters in a collection will stay as it is.
 
 For items/objects all parameters retain.
+
+#### Filter out single item's from the collection
+
+Collection mappers can discard single item's by returning `null`.
+
+```php
+
+use KingsonDe\Marshal\Mapper;
+
+class UserMapper extends Mapper {
+
+    public function map(User $user) {
+        if ($user->isPrivate()) {
+            return null;
+        }
+    
+        return [
+            'username' => $user->getUsername(),
+        ];
+    }
+}
+```
 
 ## License
 

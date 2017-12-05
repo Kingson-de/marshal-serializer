@@ -4,7 +4,11 @@ declare(strict_types = 1);
 
 namespace KingsonDe\Marshal;
 
+use KingsonDe\Marshal\Data\Collection;
+use KingsonDe\Marshal\Data\CollectionCallable;
 use KingsonDe\Marshal\Data\DataStructure;
+use KingsonDe\Marshal\Data\Item;
+use KingsonDe\Marshal\Data\ItemCallable;
 
 class Marshal {
 
@@ -16,6 +20,30 @@ class Marshal {
         $rawResponse = $dataStructure->build();
 
         return static::process($rawResponse);
+    }
+
+    public static function serializeItem(AbstractMapper $mapper, ...$data) {
+        $item = new Item($mapper, ...$data);
+
+        return static::serialize($item);
+    }
+
+    public static function serializeItemCallable(callable $mappingFunction, ...$data) {
+        $item = new ItemCallable($mappingFunction, ...$data);
+
+        return static::serialize($item);
+    }
+
+    public static function serializeCollection(AbstractMapper $mapper, ...$data) {
+        $item = new Collection($mapper, ...$data);
+
+        return static::serialize($item);
+    }
+
+    public static function serializeCollectionCallable(callable $mappingFunction, ...$data) {
+        $item = new CollectionCallable($mappingFunction, ...$data);
+
+        return static::serialize($item);
     }
 
     /**

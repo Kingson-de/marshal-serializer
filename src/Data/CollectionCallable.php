@@ -4,13 +4,12 @@ declare(strict_types = 1);
 
 namespace KingsonDe\Marshal\Data;
 
-class Collection extends AbstractDataStructure {
+class CollectionCallable extends AbstractCallableDataStructure {
 
     /**
      * @inheritdoc
      */
-    public function build(): array {
-        $mapper = $this->getMapper();
+    public function build() {
         $output = [];
 
         $data = $this->getData();
@@ -18,7 +17,7 @@ class Collection extends AbstractDataStructure {
         $modelCollection = \array_shift($data);
 
         foreach ($modelCollection as $model) {
-            $item = $mapper->map($model, ...$data);
+            $item = $this->getMappingFunction()($model, ...$data);
 
             if (!\is_array($item)) {
                 continue;
