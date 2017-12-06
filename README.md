@@ -47,6 +47,7 @@ There is also the option to use directly a callable to map data. This will be ex
 It is always possible to use a callable in a mapper or vice versa.
 
 ```php
+<?php
 
 use KingsonDe\Marshal\AbstractMapper;
 
@@ -54,10 +55,10 @@ class UserMapper extends AbstractMapper {
 
     public function map(User $user) {
         return [
-            'username' => $user->getUsername(),
-            'email'    => $user->getEmail(),
-            'birthday' => $user->getBirthday()->format('Y-m-d'),
-            'followers => count($user->getFollowers()),
+            'username'  => $user->getUsername(),
+            'email'     => $user->getEmail(),
+            'birthday'  => $user->getBirthday()->format('Y-m-d'),
+            'followers' => count($user->getFollowers()),
         ];
     }
 }
@@ -69,6 +70,8 @@ Next step is to create the desired data structure either being an item/object or
 
 #### Item/Object 
 ```php
+<?php
+
 use KingsonDe\Marshal\Data\Item;
 
 $item = new Item(new UserMapper(), $user);
@@ -76,6 +79,8 @@ $item = new Item(new UserMapper(), $user);
 
 #### Collection
 ```php
+<?php
+
 use KingsonDe\Marshal\Data\Collection;
 
 $userCollection = [$user1, $user2, $user3];
@@ -87,6 +92,8 @@ $item           = new Collection(new UserMapper(), $userCollection);
 The final step is to map the data structures to the actual format.
 
 ```php
+<?php
+
 use KingsonDe\Marshal\Marshal;
 
 $data = Marshal::serialize($item);
@@ -95,6 +102,8 @@ $data = Marshal::serialize($item);
 You are also not forced to create data structures on your own, you can use the appropriate Marshal functions instead:
 
 ```php
+<?php
+
 use KingsonDe\Marshal\Marshal;
 
 $data = Marshal::serializeItem($mapper, $model);
@@ -103,16 +112,18 @@ $data = Marshal::serializeCollection($mapper, $modelCollection);
 // or 
 $data = Marshal::serializeCollectionCallable(function (User $user) {
     return [
-        'username' => $user->getUsername(),
-        'email'    => $user->getEmail(),
-        'birthday' => $user->getBirthday()->format('Y-m-d'),
-        'followers => count($user->getFollowers()),
+        'username'  => $user->getUsername(),
+        'email'     => $user->getEmail(),
+        'birthday'  => $user->getBirthday()->format('Y-m-d'),
+        'followers' => count($user->getFollowers()),
     ];
 }, $modelCollection);
 ```
 
 ### Symfony Example
 ```php
+<?php
+
 use KingsonDe\Marshal\Data\Item;
 use KingsonDe\Marshal\Marshal;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -138,6 +149,7 @@ Mappers can even include other mappers with different data structures.
 Therefore you can use `item`, `itemCallable`, `collection` or `collectionCallable` function from the AbstractMapper class.
 
 ```php
+<?php
 
 use KingsonDe\Marshal\AbstractMapper;
 
@@ -145,11 +157,11 @@ class UserMapper extends AbstractMapper {
 
     public function map(User $user) {
         return [
-            'username' => $user->getUsername(),
-            'email'    => $user->getEmail(),
-            'birthday' => $user->getBirthday()->format('Y-m-d'),
-            'followers => $this->collection(new FollowerMapper(), $user->getFollowers),
-            'location' => $this->item(new LocationMapper(), $user->getLocation()),
+            'username'  => $user->getUsername(),
+            'email'     => $user->getEmail(),
+            'birthday'  => $user->getBirthday()->format('Y-m-d'),
+            'followers' => $this->collection(new FollowerMapper(), $user->getFollowers),
+            'location'  => $this->item(new LocationMapper(), $user->getLocation()),
         ];
     }
 }
@@ -158,6 +170,8 @@ class UserMapper extends AbstractMapper {
 #### Pass as many parameters as you like to the mappers
 
 ```php
+<?php
+
 use KingsonDe\Marshal\Data\Item;
 use KingsonDe\Marshal\Marshal;
 
@@ -166,6 +180,7 @@ $data = Marshal::serialize($item);
 ```
 
 ```php
+<?php
 
 use KingsonDe\Marshal\AbstractMapper;
 
@@ -173,11 +188,11 @@ class UserMapper extends AbstractMapper {
 
     public function map(User $user, FollowerCollection $followers, Location $location) {
         return [
-            'username' => $user->getUsername(),
-            'email'    => $user->getEmail(),
-            'birthday' => $user->getBirthday()->format('Y-m-d'),
-            'followers => $this->collection(new FollowerMapper(), $followers),
-            'location' => $this->item(new LocationMapper(), $location),
+            'username'  => $user->getUsername(),
+            'email'     => $user->getEmail(),
+            'birthday'  => $user->getBirthday()->format('Y-m-d'),
+            'followers' => $this->collection(new FollowerMapper(), $followers),
+            'location'  => $this->item(new LocationMapper(), $location),
         ];
     }
 }
@@ -194,6 +209,7 @@ For items/objects all parameters retain.
 Collection mappers can discard single item's by returning `null`.
 
 ```php
+<?php
 
 use KingsonDe\Marshal\AbstractMapper;
 
