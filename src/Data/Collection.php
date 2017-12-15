@@ -6,27 +6,13 @@ namespace KingsonDe\Marshal\Data;
 
 class Collection extends AbstractDataStructure {
 
+    use CollectionTrait;
+
     /**
      * @inheritdoc
      */
-    public function build(): array {
-        $mapper = $this->getMapper();
-        $output = [];
-
-        $data = $this->getData();
-        /** @var \Traversable $modelCollection */
-        $modelCollection = \array_shift($data);
-
-        foreach ($modelCollection as $model) {
-            $item = $mapper->map($model, ...$data);
-
-            if (!\is_array($item)) {
-                continue;
-            }
-
-            $output[] = $item;
-        }
-
-        return $output;
+    protected function mapData($model, ...$data) {
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->getMapper()->map($model, ...$data);
     }
 }

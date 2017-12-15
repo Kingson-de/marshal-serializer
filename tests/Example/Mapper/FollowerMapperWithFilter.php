@@ -7,9 +7,13 @@ namespace KingsonDe\Marshal\Example\Mapper;
 use KingsonDe\Marshal\Example\Model\User;
 use KingsonDe\Marshal\AbstractMapper;
 
-class FollowerAbstractMapper extends AbstractMapper {
+class FollowerMapperWithFilter extends AbstractMapper {
 
     public function map(User $user) {
+        if ($user->getUsername() === 'pfefferkuchenmann') {
+            return null;
+        }
+
         return [
             'username' => $user->getUsername(),
         ];

@@ -10,6 +10,7 @@ class Item extends AbstractDataStructure {
      * @inheritdoc
      */
     public function build() {
+        /** @noinspection PhpUndefinedMethodInspection */
         return $this->getMapper()->map(...$this->getData());
     }
 }

@@ -6,7 +6,7 @@ namespace KingsonDe\Marshal\Example\Mapper;
 
 use KingsonDe\Marshal\AbstractMapper;
 
-class NullAbstractMapper extends AbstractMapper {
+class NullMapper extends AbstractMapper {
 
     public function map() {
         return null;

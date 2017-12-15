@@ -35,15 +35,15 @@ class Marshal {
     }
 
     public static function serializeCollection(AbstractMapper $mapper, ...$data) {
-        $item = new Collection($mapper, ...$data);
+        $collection = new Collection($mapper, ...$data);
 
-        return static::serialize($item);
+        return static::serialize($collection);
     }
 
     public static function serializeCollectionCallable(callable $mappingFunction, ...$data) {
-        $item = new CollectionCallable($mappingFunction, ...$data);
+        $collection = new CollectionCallable($mappingFunction, ...$data);
 
-        return static::serialize($item);
+        return static::serialize($collection);
     }
 
     /**

@@ -8,10 +8,10 @@ use KingsonDe\Marshal\Data\Collection;
 use KingsonDe\Marshal\Data\CollectionCallable;
 use KingsonDe\Marshal\Data\Item;
 use KingsonDe\Marshal\Data\ItemCallable;
-use KingsonDe\Marshal\Example\Mapper\FollowerAbstractMapper;
-use KingsonDe\Marshal\Example\Mapper\FollowerAbstractMapperWithFilter;
-use KingsonDe\Marshal\Example\Mapper\ProfileAbstractMapper;
-use KingsonDe\Marshal\Example\Mapper\ProfileAbstractMapperWithCallable;
+use KingsonDe\Marshal\Example\Mapper\FollowerMapper;
+use KingsonDe\Marshal\Example\Mapper\FollowerMapperWithFilter;
+use KingsonDe\Marshal\Example\Mapper\ProfileMapper;
+use KingsonDe\Marshal\Example\Mapper\ProfileMapperWithCallable;
 use KingsonDe\Marshal\Example\Model\Profile;
 use KingsonDe\Marshal\Example\Model\User;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +20,7 @@ class MarshalTest extends TestCase {
 
     public function testSerializeComplexObject() {
         $item = new Item(
-            new ProfileAbstractMapper(),
+            new ProfileMapper(),
             $this->createProfile()
         );
 
@@ -34,14 +34,14 @@ class MarshalTest extends TestCase {
         $this->assertSame('lululu', $data['followers'][1]['username']);
         $this->assertNull($data['null']);
 
-        $equivalentData = Marshal::serializeItem(new ProfileAbstractMapper(), $this->createProfile());
+        $equivalentData = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
 
         $this->assertSame($data, $equivalentData);
     }
 
     public function testSerializeCollection() {
         $collection = new Collection(
-            new FollowerAbstractMapper(),
+            new FollowerMapper(),
             $this->createFollowers()
         );
 
@@ -51,7 +51,7 @@ class MarshalTest extends TestCase {
         $this->assertSame('pfefferkuchenmann', $data[0]['username']);
         $this->assertSame('lululu', $data[1]['username']);
 
-        $equivalentData = Marshal::serializeCollection(new FollowerAbstractMapper(), $this->createFollowers());
+        $equivalentData = Marshal::serializeCollection(new FollowerMapper(), $this->createFollowers());
 
         $this->assertSame($data, $equivalentData);
     }
@@ -85,7 +85,7 @@ class MarshalTest extends TestCase {
         $this->assertSame('lululu', $data['followers'][1]['username']);
         $this->assertNull($data['null']);
 
-        $equivalentData = Marshal::serializeItem(new ProfileAbstractMapper(), $this->createProfile());
+        $equivalentData = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
 
         $this->assertSame($data, $equivalentData);
     }
@@ -101,13 +101,13 @@ class MarshalTest extends TestCase {
         $this->assertSame('pfefferkuchenmann', $data[0]['username']);
         $this->assertSame('lululu', $data[1]['username']);
 
-        $equivalentData = Marshal::serializeCollection(new FollowerAbstractMapper(), $this->createFollowers());
+        $equivalentData = Marshal::serializeCollection(new FollowerMapper(), $this->createFollowers());
 
         $this->assertSame($data, $equivalentData);
     }
 
     public function testSerializeObjectWithCallableCombined() {
-        $data = Marshal::serializeItem(new ProfileAbstractMapperWithCallable(), $this->createProfile());
+        $data = Marshal::serializeItem(new ProfileMapperWithCallable(), $this->createProfile());
 
         $this->assertSame(123, $data['id']);
         $this->assertSame('kingson@example.org', $data['email']);
@@ -117,7 +117,7 @@ class MarshalTest extends TestCase {
         $this->assertSame('lululu', $data['followers'][1]['username']);
         $this->assertNull($data['null']);
 
-        $equivalentData = Marshal::serializeItem(new ProfileAbstractMapper(), $this->createProfile());
+        $equivalentData = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
 
         $this->assertSame($data, $equivalentData);
     }
@@ -136,7 +136,7 @@ class MarshalTest extends TestCase {
         $this->assertCount(1, $data);
         $this->assertSame('lululu', $data[0]['username']);
 
-        $equivalentData = Marshal::serializeCollection(new FollowerAbstractMapperWithFilter(), $this->createFollowers());
+        $equivalentData = Marshal::serializeCollection(new FollowerMapperWithFilter(), $this->createFollowers());
 
         $this->assertSame($data, $equivalentData);
     }

@@ -5,10 +5,9 @@ declare(strict_types = 1);
 namespace KingsonDe\Marshal\Example\Mapper;
 
 use KingsonDe\Marshal\Example\Model\Profile;
-use KingsonDe\Marshal\Example\Model\User;
 use KingsonDe\Marshal\AbstractMapper;
 
-class ProfileAbstractMapperWithCallable extends AbstractMapper {
+class ProfileMapper extends AbstractMapper {
 
     public function map(Profile $profile) {
         $user      = $profile->getUser();
@@ -19,14 +18,8 @@ class ProfileAbstractMapperWithCallable extends AbstractMapper {
             'email'          => $user->getEmail(),
             'username'       => $user->getUsername(),
             'follower_count' => \count($followers),
-            'followers'      => $this->collectionCallable(function (User $user) {
-                return [
-                    'username' => $user->getUsername(),
-                ];
-            }, $followers),
-            'null' => $this->itemCallable(function () {
-                return null;
-            }),
+            'followers'      => $this->collection(new FollowerMapper(), $followers),
+            'null'           => $this->item(new NullMapper()),
         ];
     }
 }
