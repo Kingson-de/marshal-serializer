@@ -38,7 +38,7 @@
     </logging>
 
     <testsuites>
-        <testsuite name="Unit Search">
+        <testsuite>
             <directory>tests</directory>
         </testsuite>
     </testsuites>
