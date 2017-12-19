@@ -11,6 +11,10 @@ Marshal is [serializing](https://en.wikipedia.org/wiki/Serialization) / [marshal
 
 Especially useful for building the raw response for web services which then can be formatted to JSON for example.
 
+If you need to serialize directly to a format, use the appropriate Marshal library:
+
+* [Marshal JSON serializer](https://github.com/Kingson-de/marshal-json-serializer)
+
 ## Installation
 
 Easiest way to install the library is via composer:
