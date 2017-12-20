@@ -14,6 +14,7 @@ Especially useful for building the raw response for web services which then can 
 If you need to serialize directly to a format, use the appropriate Marshal library:
 
 * [Marshal JSON serializer](https://github.com/Kingson-de/marshal-json-serializer)
+* [Marshal XML serializer](https://github.com/Kingson-de/marshal-xml-serializer)
 
 ## Installation
 
