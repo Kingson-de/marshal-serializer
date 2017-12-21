@@ -1,6 +1,6 @@
 {
     "name": "kingson-de/marshal-serializer",
-    "description": "Translates data structures to a format that can be used to build messages for transferring data through the wires.",
+    "description": "Marshal is serializing / marshalling data structures to a format that can be used to build messages for transferring data through the wires.",
     "type": "library",
     "license": "Apache License",
     "authors": [
