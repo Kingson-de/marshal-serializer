@@ -1,4 +1,4 @@
-# Marshal
+# Marshal Serializer
 
 ![Marshal Serializer logo](marshal.png "Marshal Serializer")
 
