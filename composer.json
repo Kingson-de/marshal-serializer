@@ -3,7 +3,7 @@
     "description": "Marshal is serializing / marshalling data structures to a format that can be used to build messages for transferring data through the wires.",
     "keywords": ["serializer","marshalling","serialization","marshal","mappers","json","xml"],
     "type": "library",
-    "license": "Apache License",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Martin Ossowski",
