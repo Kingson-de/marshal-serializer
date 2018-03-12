@@ -6,8 +6,10 @@ namespace KingsonDe\Marshal;
 
 use KingsonDe\Marshal\Data\Collection;
 use KingsonDe\Marshal\Data\CollectionCallable;
+use KingsonDe\Marshal\Data\FlexibleData;
 use KingsonDe\Marshal\Data\Item;
 use KingsonDe\Marshal\Data\ItemCallable;
+use KingsonDe\Marshal\Example\ObjectMapper\ProfileObjectMapper;
 use KingsonDe\Marshal\Example\Mapper\FollowerMapper;
 use KingsonDe\Marshal\Example\Mapper\FollowerMapperWithFilter;
 use KingsonDe\Marshal\Example\Mapper\ProfileMapper;
@@ -141,6 +143,42 @@ class MarshalTest extends TestCase {
         $this->assertSame($data, $equivalentData);
     }
 
+    public function testDeserialize() {
+        $data = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
+        $flexibleData = new FlexibleData($data);
+
+        /** @var Profile $profile */
+        $profile = Marshal::deserialize(new ProfileObjectMapper(), $flexibleData);
+
+        $this->assertSame(123, $profile->getUser()->getId());
+        $this->assertSame('kingson@example.org', $profile->getUser()->getEmail());
+        $this->assertSame('kingson', $profile->getUser()->getUsername());
+        $this->assertEmpty($profile->getFollowers()[0]->getId());
+        $this->assertEmpty($profile->getFollowers()[0]->getEmail());
+        $this->assertSame('pfefferkuchenmann', $profile->getFollowers()[0]->getUsername());
+        $this->assertEmpty($profile->getFollowers()[1]->getId());
+        $this->assertEmpty($profile->getFollowers()[1]->getEmail());
+        $this->assertSame('lululu', $profile->getFollowers()[1]->getUsername());
+    }
+
+    public function testDeserializeWithCallable() {
+        $data = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
+        $flexibleData = new FlexibleData($data);
+
+        /** @var User $user */
+        $user = Marshal::deserializeCallable(function (FlexibleData $flexibleData) {
+            return new User(
+                $flexibleData->get('id'),
+                $flexibleData->get('email'),
+                $flexibleData->get('username')
+            );
+        }, $flexibleData);
+
+        $this->assertSame(123, $user->getId());
+        $this->assertSame('kingson@example.org', $user->getEmail());
+        $this->assertSame('kingson', $user->getUsername());
+    }
+
     private function createProfile(): Profile {
         $user      = new User(123, 'kingson@example.org', 'kingson');
         $followers = $this->createFollowers();
@@ -148,7 +186,7 @@ class MarshalTest extends TestCase {
         return new Profile($user, ...$followers);
     }
 
-    private function createFollowers() {
+    private function createFollowers(): array {
         $follower1 = new User(124, 'pfefferkuchenmann@example.org', 'pfefferkuchenmann');
         $follower2 = new User(125, 'lululu@example.org', 'lululu');
 
