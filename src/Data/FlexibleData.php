@@ -65,11 +65,7 @@ class FlexibleData implements DataStructure, \ArrayAccess, \Iterator {
      * @inheritdoc
      */
     public function offsetSet($offset, $value) {
-        if (null === $offset) {
-            $this->data[] = $value;
-        } else {
-            $this->data[$offset] = $value;
-        }
+        $this->data[$offset] = $value;
     }
 
     /**
