@@ -33,13 +33,12 @@ class FlexibleDataTest extends TestCase {
     }
 
     public function testArrayAccess() {
-        unset($this->flexibleData['users'][1]);
+        unset($this->flexibleData['userCount'], $this->flexibleData['users'][1]);
         $this->flexibleData['users'][0]['username'] = 'pfefferkuchenmann';
-        $this->flexibleData['userCount'] = 1;
 
         $this->assertSame('pfefferkuchenmann', $this->flexibleData['users'][0]['username']);
-        $this->assertSame(1, $this->flexibleData['userCount']);
         $this->assertCount(1, $this->flexibleData['users']);
+        $this->assertEmpty($this->flexibleData['userCount']);
     }
 
     public function testSerialize() {
@@ -55,5 +54,33 @@ class FlexibleDataTest extends TestCase {
         $this->assertSame('lululu', $data['users'][1]['username']);
         $this->assertSame('kingson', $data['users'][2]['username']);
         $this->assertCount(3, $data['users']);
+    }
+
+    public function testGetMethod() {
+        $this->flexibleData['custom'] = new \stdClass();
+
+        $this->assertSame(2, $this->flexibleData->get('userCount'));
+        $this->assertNull($this->flexibleData->get('nothing'));
+        $this->assertInstanceOf(FlexibleData::class, $this->flexibleData->get('users'));
+        $this->assertInstanceOf(\stdClass::class, $this->flexibleData->get('custom'));
+    }
+
+    public function testAddElement() {
+        $this->flexibleData['users'][] = ['username' => 'lululu'];
+
+        $this->assertCount(3, $this->flexibleData['users']);
+        $this->assertSame('lululu', $this->flexibleData['users'][2]['username']);
+    }
+
+    public function testIterator() {
+        $users = [];
+
+        foreach ($this->flexibleData->get('users') as $key => $user) {
+            $users[$key] = $user;
+        }
+
+        $this->assertSame('kingson', $users[0]['username']);
+        $this->assertSame('pfefferkuchenmann', $users[1]['username']);
+        $this->assertContainsOnlyInstancesOf(FlexibleData::class, $users);
     }
 }
