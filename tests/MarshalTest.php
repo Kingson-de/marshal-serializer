@@ -186,6 +186,19 @@ class MarshalTest extends TestCase {
         $this->assertSame('kingson', $user->getUsername());
     }
 
+    public function testDeserializeWithAdditionalData() {
+        $data = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
+        $flexibleData = new FlexibleData($data);
+
+        /** @var Profile $profile */
+        $profile = Marshal::deserialize(new ProfileObjectMapper(), $flexibleData, false);
+
+        $this->assertSame(123, $profile->getUser()->getId());
+        $this->assertSame('kingson@example.org', $profile->getUser()->getEmail());
+        $this->assertSame('kingson', $profile->getUser()->getUsername());
+        $this->assertEmpty($profile->getFollowers());
+    }
+
     private function createProfile(): Profile {
         $user      = new User(123, 'kingson@example.org', 'kingson');
         $followers = $this->createFollowers();

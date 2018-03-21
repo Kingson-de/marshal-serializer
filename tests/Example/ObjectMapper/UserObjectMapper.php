@@ -15,11 +15,11 @@ class UserObjectMapper extends AbstractObjectMapper {
      *
      * @return User
      */
-    public function map(FlexibleData $flexibleData) {
+    public function map(FlexibleData $flexibleData, ...$additionalData) {
         return new User(
             $flexibleData['id'] ?? 0,
             $flexibleData['email'] ?? '',
-            $flexibleData['username'] ?? ''
+            $flexibleData->find('username', '')
         );
     }
 }

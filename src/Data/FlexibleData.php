@@ -30,10 +30,24 @@ class FlexibleData implements DataStructure, \ArrayAccess, \Iterator {
     /**
      * @param string|int $key
      * @return mixed
+     * @throws \OutOfBoundsException
      */
     public function get($key) {
-        if (!isset($this->data[$key])) {
-            return null;
+        if (!array_key_exists($key, $this->data)) {
+            throw new \OutOfBoundsException("No value set for $key.");
+        }
+
+        return $this->find($key);
+    }
+
+    /**
+     * @param string|int $key
+     * @param mixed $defaultValue
+     * @return mixed
+     */
+    public function find($key, $defaultValue = null) {
+        if (!array_key_exists($key, $this->data)) {
+            return $defaultValue;
         }
 
         if (\is_scalar($this->data[$key])) {

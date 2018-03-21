@@ -60,9 +60,28 @@ class FlexibleDataTest extends TestCase {
         $this->flexibleData['custom'] = new \stdClass();
 
         $this->assertSame(2, $this->flexibleData->get('userCount'));
-        $this->assertNull($this->flexibleData->get('nothing'));
         $this->assertInstanceOf(FlexibleData::class, $this->flexibleData->get('users'));
         $this->assertInstanceOf(\stdClass::class, $this->flexibleData->get('custom'));
+    }
+
+    /**
+     * @expectedException \OutOfBoundsException
+     */
+    public function testGetMethodWithInvalidKey() {
+        $this->flexibleData->get('nothing');
+    }
+
+    public function testFindMethod() {
+        $this->flexibleData['custom'] = new \stdClass();
+
+        $this->assertSame(2, $this->flexibleData->find('userCount'));
+        $this->assertInstanceOf(FlexibleData::class, $this->flexibleData->find('users'));
+        $this->assertInstanceOf(\stdClass::class, $this->flexibleData->find('custom'));
+    }
+
+    public function testFindMethodWithInvalidKey() {
+        $this->assertNull($this->flexibleData->find('nothing'));
+        $this->assertSame(0, $this->flexibleData->find('nothing', 0));
     }
 
     public function testAddElement() {

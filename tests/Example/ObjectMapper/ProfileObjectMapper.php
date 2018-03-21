@@ -10,17 +10,17 @@ use KingsonDe\Marshal\Example\Model\Profile;
 
 class ProfileObjectMapper extends AbstractObjectMapper {
 
-    /**
-     * @inheritdoc
-     *
-     * @return Profile
-     */
-    public function map(FlexibleData $flexibleData) {
+    public function map(FlexibleData $flexibleData, ...$additionalData): Profile {
         $userMapper = new UserObjectMapper();
+
+        $includeFollowers = array_shift($additionalData) ?? true;
+        $followers = $includeFollowers
+            ? $this->collection($userMapper, $flexibleData->get('followers'))
+            : [];
 
         return new Profile(
             $this->item($userMapper, $flexibleData),
-            ...$this->collection($userMapper, $flexibleData->get('followers'))
+            ...$followers
         );
     }
 }
