@@ -1,7 +1,7 @@
 {
     "name": "kingson-de/marshal-serializer",
     "description": "Marshal is serializing / marshalling data structures to a format that can be used to build messages for transferring data through the wires.",
-    "keywords": ["serializer","marshalling","serialization","marshal","mappers","json","xml"],
+    "keywords": ["serializer","deserializer","marshalling","unmarshalling","serialization","deserialization","marshal","mappers","json","xml"],
     "type": "library",
     "license": "Apache-2.0",
     "authors": [

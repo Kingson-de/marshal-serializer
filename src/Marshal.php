@@ -7,6 +7,7 @@ namespace KingsonDe\Marshal;
 use KingsonDe\Marshal\Data\Collection;
 use KingsonDe\Marshal\Data\CollectionCallable;
 use KingsonDe\Marshal\Data\DataStructure;
+use KingsonDe\Marshal\Data\FlexibleData;
 use KingsonDe\Marshal\Data\Item;
 use KingsonDe\Marshal\Data\ItemCallable;
 
@@ -76,5 +77,33 @@ class Marshal {
         }
 
         return $response;
+    }
+
+    /**
+     * @param AbstractObjectMapper $mapper
+     * @param array $data
+     * @param mixed[] $additionalData
+     * @return mixed
+     */
+    public static function deserialize(
+        AbstractObjectMapper $mapper,
+        array $data,
+        ...$additionalData
+    ) {
+        return $mapper->map(new FlexibleData($data), ...$additionalData);
+    }
+
+    /**
+     * @param callable $mappingFunction
+     * @param array $data
+     * @param mixed[] $additionalData
+     * @return mixed
+     */
+    public static function deserializeCallable(
+        callable $mappingFunction,
+        array $data,
+        ...$additionalData
+    ) {
+        return $mappingFunction(new FlexibleData($data), ...$additionalData);
     }
 }
