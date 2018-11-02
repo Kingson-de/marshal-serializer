@@ -152,10 +152,9 @@ class MarshalTest extends TestCase {
 
     public function testDeserialize() {
         $data = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
-        $flexibleData = new FlexibleData($data);
 
         /** @var Profile $profile */
-        $profile = Marshal::deserialize(new ProfileObjectMapper(), $flexibleData);
+        $profile = Marshal::deserialize(new ProfileObjectMapper(), $data);
 
         $this->assertSame(123, $profile->getUser()->getId());
         $this->assertSame('kingson@example.org', $profile->getUser()->getEmail());
@@ -170,7 +169,6 @@ class MarshalTest extends TestCase {
 
     public function testDeserializeWithCallable() {
         $data = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
-        $flexibleData = new FlexibleData($data);
 
         /** @var User $user */
         $user = Marshal::deserializeCallable(function (FlexibleData $flexibleData) {
@@ -179,7 +177,7 @@ class MarshalTest extends TestCase {
                 $flexibleData->get('email'),
                 $flexibleData->get('username')
             );
-        }, $flexibleData);
+        }, $data);
 
         $this->assertSame(123, $user->getId());
         $this->assertSame('kingson@example.org', $user->getEmail());
@@ -188,10 +186,9 @@ class MarshalTest extends TestCase {
 
     public function testDeserializeWithAdditionalData() {
         $data = Marshal::serializeItem(new ProfileMapper(), $this->createProfile());
-        $flexibleData = new FlexibleData($data);
 
         /** @var Profile $profile */
-        $profile = Marshal::deserialize(new ProfileObjectMapper(), $flexibleData, false);
+        $profile = Marshal::deserialize(new ProfileObjectMapper(), $data, false);
 
         $this->assertSame(123, $profile->getUser()->getId());
         $this->assertSame('kingson@example.org', $profile->getUser()->getEmail());

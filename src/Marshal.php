@@ -81,29 +81,29 @@ class Marshal {
 
     /**
      * @param AbstractObjectMapper $mapper
-     * @param FlexibleData $flexibleData
+     * @param array $data
      * @param mixed[] $additionalData
      * @return mixed
      */
     public static function deserialize(
         AbstractObjectMapper $mapper,
-        FlexibleData $flexibleData,
+        array $data,
         ...$additionalData
     ) {
-        return $mapper->map($flexibleData, ...$additionalData);
+        return $mapper->map(new FlexibleData($data), ...$additionalData);
     }
 
     /**
      * @param callable $mappingFunction
-     * @param FlexibleData $flexibleData
+     * @param array $data
      * @param mixed[] $additionalData
      * @return mixed
      */
     public static function deserializeCallable(
         callable $mappingFunction,
-        FlexibleData $flexibleData,
+        array $data,
         ...$additionalData
     ) {
-        return $mappingFunction($flexibleData, ...$additionalData);
+        return $mappingFunction(new FlexibleData($data), ...$additionalData);
     }
 }

@@ -234,6 +234,63 @@ class UserMapper extends AbstractMapper {
 }
 ```
 
+### Deserializing / Unmarshalling
+
+To transform the actual format back to your structure use Marshal's deserialize functions.
+You need a class extending the AbstractObjectMapper which will be passed to the deserialize function.
+
+```php
+<?php
+
+use KingsonDe\Marshal\AbstractObjectMapper;
+use KingsonDe\Marshal\Data\FlexibleData;
+use KingsonDe\Marshal\Example\Model\User;
+
+class UserObjectMapper extends AbstractObjectMapper {
+
+    /**
+     * @inheritdoc
+     *
+     * @return User
+     */
+    public function map(FlexibleData $flexibleData, ...$additionalData) {
+        return new User(
+            $flexibleData['id'] ?? 0,
+            $flexibleData['email'] ?? '',
+            $flexibleData->find('username', '')
+        );
+    }
+}
+```
+
+```php
+<?php
+
+use KingsonDe\Marshal\Marshal;
+
+$data = Marshal::serializeItem(new UserMapper(), $user);
+
+$user = Marshal::deserialize(new UserObjectMapper(), $data);
+```
+
+Another option would be to use the deserializeCallable function.
+
+```php
+<?php
+
+use KingsonDe\Marshal\Marshal;
+
+$data = Marshal::serializeItem(new UserMapper(), $user);
+
+$user = Marshal::deserializeCallable(function (FlexibleData $flexibleData) {
+    return new User(
+        $flexibleData->get('id'),
+        $flexibleData->get('email'),
+        $flexibleData->get('username')
+    );
+}, $data);
+```
+
 ## License
 
 This project is released under the terms of the [Apache 2.0 license](https://github.com/Kingson-de/marshal-serializer/blob/master/LICENSE).
