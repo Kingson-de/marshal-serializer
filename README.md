@@ -9,7 +9,7 @@
 
 ## Introduction
 
-Marshal is [serializing](https://en.wikipedia.org/wiki/Serialization) / [marshalling](https://en.wikipedia.org/wiki/Marshalling_(computer_science)) data structures to a format that can be used to build messages for transferring data through the wires.
+Marshal is [serializing](https://en.wikipedia.org/wiki/Serialization) / [marshalling](https://en.wikipedia.org/wiki/Marshalling_(computer_science)) data structures to the desired format. It is also deserializing / unmarshalling the format back to the data structures.
 
 Especially useful for building the raw response for web services which then can be formatted to JSON for example.
 
